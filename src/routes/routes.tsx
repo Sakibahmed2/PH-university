@@ -3,6 +3,7 @@ import App from "../App";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { adminRoutes } from "./admin.routes";
+import React from "react";
 
 const router = createBrowserRouter([
   {

@@ -1,16 +1,4 @@
-import { ReactNode } from "react";
-
-type TRoute = {
-  path: string;
-  element: ReactNode;
-};
-
-type TUserPath = {
-  name: string;
-  path?: string;
-  element?: ReactNode;
-  children?: TUserPath[];
-};
+import { TRoute, TUserPath } from "../types";
 
 export const routesGenerator = (items: TUserPath[]) => {
   const routes = items.reduce((acc: TRoute[], item) => {
@@ -24,7 +12,7 @@ export const routesGenerator = (items: TUserPath[]) => {
     if (item.children) {
       item.children.forEach((child) => {
         acc.push({
-          path: child.path,
+          path: child.path!,
           element: child.element,
         });
       });

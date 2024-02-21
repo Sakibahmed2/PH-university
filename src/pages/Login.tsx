@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
-  const [login, { data, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
 
   const onSubmit = async (data: FieldValues) => {

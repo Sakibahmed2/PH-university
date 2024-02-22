@@ -1,9 +1,7 @@
+import React from "react";
+
 const CreateFaculty = () => {
-  return (
-    <div>
-      <h2>Create faculty</h2>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default CreateFaculty;

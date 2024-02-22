@@ -1,18 +1,22 @@
 import { Form, Select } from "antd";
+import { Controller } from "react-hook-form";
 
-const PHSelect = ({ label }) => {
+type TSelectProps = {
+  label: string;
+  name: string;
+  option: { value: string; label: string; disabled?: boolean }[];
+};
+
+const PHSelect = ({ label, name, option }: TSelectProps) => {
   return (
-    <Form.Item label={label}>
-      <Select
-        style={{ width: "100%" }}
-        options={[
-          { value: "jack", label: "Jack" },
-          { value: "lucy", label: "Lucy" },
-          { value: "Yiminghe", label: "yiminghe" },
-          { value: "disabled", label: "Disabled", disabled: true },
-        ]}
-      />
-    </Form.Item>
+    <Controller
+      name={name}
+      render={({ field }) => (
+        <Form.Item label={label}>
+          <Select style={{ width: "100%" }} {...field} options={option} />
+        </Form.Item>
+      )}
+    />
   );
 };
 

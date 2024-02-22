@@ -18,9 +18,22 @@ const nameOptions = [
   },
 ];
 
+const currentYear = new Date().getFullYear();
+const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
+  value: String(currentYear + number),
+  label: String(currentYear + number),
+}));
+
 const CreateAcademicSemester = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    const name = nameOptions[Number(data.name) - 1].label;
+
+    const semesterData = {
+      name,
+      code: data.name,
+      year: data.year,
+    };
+    console.log(semesterData);
   };
 
   return (
@@ -28,6 +41,13 @@ const CreateAcademicSemester = () => {
       <Col span={6}>
         <PHForm onSubmit={onSubmit}>
           <PHSelect label="Name" name="name" option={nameOptions} />
+          <PHSelect label="Year" name="year" option={yearOptions} />
+          <PHSelect
+            label="Start month"
+            name="startMonth"
+            option={nameOptions}
+          />
+          <PHSelect label="End month" name="endMonth" option={nameOptions} />
           <Button htmlType="submit">Submit</Button>
         </PHForm>
       </Col>

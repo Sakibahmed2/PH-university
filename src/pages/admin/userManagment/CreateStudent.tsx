@@ -5,7 +5,11 @@ import { Button, Col, Divider, Row } from "antd";
 import PHSelect from "../../../components/form/PHSelect";
 import { bloodGroupOptions, genderOptions } from "../../../constants/global";
 import PHDatePicker from "../../../components/form/PHDatePicker";
-import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagment.api";
+import {
+  useGetAllAcademicDepartmentsQuery,
+  useGetAllSemestersQuery,
+} from "../../../redux/features/admin/academicManagment.api";
+import { useAddStudentMutation } from "../../../redux/features/admin/userManagment.api";
 
 const studentDummyData = {
   password: "student123",
@@ -80,27 +84,48 @@ const studentDefaultValues = {
     address: "789 Pine St, Villageton",
   },
 
-  admissionSemester: "65b0104110b74fcbd7a25d92",
-  academicDepartment: "65b00fb010b74fcbd7a25d8e",
+  // admissionSemester: "65b0104110b74fcbd7a25d92",
+  // academicDepartment: "65dacec6f6276d8422da8298",
 };
 
 const CreateStudent = () => {
+  const [addStudent, { data, error }] = useAddStudentMutation();
+
+  console.log({ data, error });
+
   const { data: semesterData, isLoading: semesterIsLoading } =
     useGetAllSemestersQuery(undefined);
+
+  const { data: departmentData, isLoading: departmentIsLoading } =
+    useGetAllAcademicDepartmentsQuery(undefined, { skip: semesterIsLoading });
 
   const semesterOptions = semesterData?.data?.map((item) => ({
     value: item._id,
     label: `${item.name} ${item.year}`,
   }));
+  const departmentOptions = departmentData?.data?.map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    // console.log(data);
 
-    // const formData = new FormData();
-    // formData.append("data", JSON.stringify(data));
-    // // This is for development
-    // // Just for checking
-    // console.log(Object.fromEntries(formData));
+    const studentData = {
+      password: "student123",
+      student: data,
+    };
+
+    console.log(studentData);
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(studentData));
+
+    addStudent(formData);
+
+    // This is for development
+    // Just for checking
+    console.log(Object.fromEntries(formData));
   };
 
   return (
@@ -245,6 +270,15 @@ const CreateStudent = () => {
                 name="admissionSemester"
                 label="Admission semester"
                 option={semesterOptions}
+                disabled={semesterIsLoading}
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PHSelect
+                name="academicDepartment"
+                label="Admission department"
+                option={departmentOptions}
+                disabled={departmentIsLoading}
               />
             </Col>
           </Row>

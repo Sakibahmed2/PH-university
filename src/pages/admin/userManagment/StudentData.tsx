@@ -1,5 +1,5 @@
 import type { TableColumnsType, TableProps } from "antd";
-import { Button, Row, Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
 import { useState } from "react";
 import { useGetAllStudentsQuery } from "../../../redux/features/admin/userManagment.api";
 import { TQueryParams, TStudent } from "../../../types";
@@ -7,8 +7,13 @@ import { TQueryParams, TStudent } from "../../../types";
 export type TTableData = Pick<TStudent, "name" | "id">;
 
 const StudentData = () => {
-  const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
-  const { data: studentData, isFetching } = useGetAllStudentsQuery(params);
+  const [params, setParams] = useState<TQueryParams[]>([]);
+  const { data: studentData, isFetching } = useGetAllStudentsQuery([
+    { name: "limit", value: 10 },
+    { name: "page", value: 2 },
+    { name: "sort", value: "id" },
+    ...params,
+  ]);
   console.log(studentData);
 
   const tableData = studentData?.data?.map(({ _id, fullName, id }) => ({

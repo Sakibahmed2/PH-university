@@ -4,6 +4,8 @@ import PHInput from "../../../components/form/PHInput";
 import { Button, Col, Divider, Row } from "antd";
 import PHSelect from "../../../components/form/PHSelect";
 import { bloodGroupOptions, genderOptions } from "../../../constants/global";
+import PHDatePicker from "../../../components/form/PHDatePicker";
+import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagment.api";
 
 const studentDummyData = {
   password: "student123",
@@ -44,7 +46,53 @@ const studentDummyData = {
   },
 };
 
+//This is for only development
+// should be removed
+const studentDefaultValues = {
+  name: {
+    firstName: "I am ",
+    middleName: "Student",
+    lastName: "Number 1",
+  },
+  gender: "male",
+
+  bloogGroup: "A+",
+
+  email: "student2@gmail.com",
+  contactNo: "1235678",
+  emergencyContactNo: "987-654-3210",
+  presentAddress: "123 Main St, Cityville",
+  permanentAddress: "456 Oak St, Townsville",
+
+  guardian: {
+    fatherName: "James Doe",
+    fatherOccupation: "Engineer",
+    fatherContactNo: "111-222-3333",
+    motherName: "Mary Doe",
+    motherOccupation: "Teacher",
+    motherContactNo: "444-555-6666",
+  },
+
+  localGuardian: {
+    name: "Alice Johnson",
+    occupation: "Doctor",
+    contactNo: "777-888-9999",
+    address: "789 Pine St, Villageton",
+  },
+
+  admissionSemester: "65b0104110b74fcbd7a25d92",
+  academicDepartment: "65b00fb010b74fcbd7a25d8e",
+};
+
 const CreateStudent = () => {
+  const { data: semesterData, isLoading: semesterIsLoading } =
+    useGetAllSemestersQuery(undefined);
+
+  const semesterOptions = semesterData?.data?.map((item) => ({
+    value: item._id,
+    label: `${item.name} ${item.year}`,
+  }));
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
 
@@ -58,7 +106,7 @@ const CreateStudent = () => {
   return (
     <Row>
       <Col span={24}>
-        <PHForm onSubmit={onSubmit}>
+        <PHForm onSubmit={onSubmit} defaultValues={studentDefaultValues}>
           <Divider>Personal info.</Divider>
           <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -74,7 +122,7 @@ const CreateStudent = () => {
               <PHSelect name="gender" label="Gender" option={genderOptions} />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PHInput type="text" name="dateOfBirth" label="Date of birth" />
+              <PHDatePicker name="dateOfBirth" label="Date of birth" />
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHSelect
@@ -84,6 +132,7 @@ const CreateStudent = () => {
               />
             </Col>
           </Row>
+
           <Divider>Contact info.</Divider>
           <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -185,6 +234,17 @@ const CreateStudent = () => {
                 type="text"
                 name="localGuardian.address"
                 label="Address"
+              />
+            </Col>
+          </Row>
+
+          <Divider>Academic info.</Divider>
+          <Row gutter={8}>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PHSelect
+                name="admissionSemester"
+                label="Admission semester"
+                option={semesterOptions}
               />
             </Col>
           </Row>

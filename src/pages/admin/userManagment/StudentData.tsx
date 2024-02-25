@@ -3,8 +3,12 @@ import { Button, Pagination, Space, Table } from "antd";
 import { useState } from "react";
 import { useGetAllStudentsQuery } from "../../../redux/features/admin/userManagment.api";
 import { TQueryParams, TStudent } from "../../../types";
+import { NavLink } from "react-router-dom";
 
-export type TTableData = Pick<TStudent, "fullName" | "id">;
+export type TTableData = Pick<
+  TStudent,
+  "fullName" | "id" | "email" | "contactNo"
+>;
 
 const StudentData = () => {
   const [page, setPage] = useState(1);
@@ -18,11 +22,15 @@ const StudentData = () => {
   console.log(studentData);
   const metaData = studentData?.meta;
 
-  const tableData = studentData?.data?.map(({ _id, fullName, id }) => ({
-    key: _id,
-    fullName,
-    id,
-  }));
+  const tableData = studentData?.data?.map(
+    ({ _id, fullName, id, email, contactNo }) => ({
+      key: _id,
+      fullName,
+      id,
+      email,
+      contactNo,
+    })
+  );
 
   const columns: TableColumnsType<TTableData> = [
     {
@@ -36,12 +44,26 @@ const StudentData = () => {
       dataIndex: "id",
     },
     {
+      title: "Email ",
+      key: "email",
+      dataIndex: "email",
+    },
+    {
+      title: "Contact No.",
+      key: "contactNo",
+      dataIndex: "contactNo",
+    },
+    {
       title: "Action",
       key: "x",
-      render: () => (
+      render: (item) => (
         <Space>
-          <Button>Details</Button>
-          <Button>Update</Button>
+          <NavLink to={`/admin/student-data/${item.key}`}>
+            <Button>Details</Button>
+          </NavLink>
+          <NavLink to={`/admin/update-student-data/${item.key}`}>
+            <Button>Update</Button>
+          </NavLink>
           <Button>Block</Button>
         </Space>
       ),

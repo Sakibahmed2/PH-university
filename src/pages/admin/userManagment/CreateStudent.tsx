@@ -85,8 +85,8 @@ const studentDefaultValues = {
     address: "789 Pine St, Villageton",
   },
 
-  // admissionSemester: "65b0104110b74fcbd7a25d92",
-  // academicDepartment: "65dacec6f6276d8422da8298",
+  admissionSemester: "65d73a1dbc85c5e5984832bc",
+  academicDepartment: "65dacec6f6276d8422da8298",
 };
 
 const CreateStudent = () => {

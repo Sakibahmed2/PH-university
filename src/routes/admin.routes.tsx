@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import AdminDashboard from "../pages/admin/userManagment/AdminDashboard";
-import CreateAdmin from "../pages/admin/userManagment/CreateAdmin";
-import CreateFaculty from "../pages/admin/userManagment/CreateFaculty";
-import CreateStudent from "../pages/admin/userManagment/CreateStudent";
 import AcademicDepartment from "../pages/admin/academicManagement/AcademicDepartment";
 import AcademicFaculty from "../pages/admin/academicManagement/AcademicFaculty";
 import AcademicSemester from "../pages/admin/academicManagement/AcademicSemester";
 import CreateAcademicDepartment from "../pages/admin/academicManagement/CreateAcademicDepartment";
 import CreateAcademicFaculty from "../pages/admin/academicManagement/CreateAcademicFaculty";
 import CreateAcademicSemester from "../pages/admin/academicManagement/CreateAcademicSemester";
+import Courses from "../pages/admin/courseManagment/Courses";
+import CreateCourse from "../pages/admin/courseManagment/CreateCourse";
+import OfferCourse from "../pages/admin/courseManagment/OfferCourse";
+import OfferedCourses from "../pages/admin/courseManagment/OfferedCourses";
+import RegisteredSemesters from "../pages/admin/courseManagment/RegisteredSemesters";
+import SemesterRegistration from "../pages/admin/courseManagment/SemesterRegistration";
+import AdminDashboard from "../pages/admin/userManagment/AdminDashboard";
+import CreateAdmin from "../pages/admin/userManagment/CreateAdmin";
+import CreateFaculty from "../pages/admin/userManagment/CreateFaculty";
+import CreateStudent from "../pages/admin/userManagment/CreateStudent";
 import StudentData from "../pages/admin/userManagment/StudentData";
-import UpdateStudent from "../pages/admin/userManagment/UpdateStudent";
 import StudentDetails from "../pages/admin/userManagment/StudentDetails";
+import UpdateStudent from "../pages/admin/userManagment/UpdateStudent";
 
 export const adminPaths = [
   {
@@ -84,6 +90,41 @@ export const adminPaths = [
         name: "Create faculty",
         path: "create-faculty",
         element: <CreateFaculty />,
+      },
+    ],
+  },
+  {
+    name: "Course Management",
+    children: [
+      {
+        name: "Semester Registration",
+        path: "semester-registration",
+        element: <SemesterRegistration />,
+      },
+      {
+        name: "Registered Semesters",
+        path: "registered-semesters",
+        element: <RegisteredSemesters />,
+      },
+      {
+        name: "Create Course",
+        path: "create-course",
+        element: <CreateCourse />,
+      },
+      {
+        name: "Courses",
+        path: "courses",
+        element: <Courses />,
+      },
+      {
+        name: "Offer Course",
+        path: "offer-course",
+        element: <OfferCourse />,
+      },
+      {
+        name: "Offered Courses",
+        path: "offered-courses",
+        element: <OfferedCourses />,
       },
     ],
   },
